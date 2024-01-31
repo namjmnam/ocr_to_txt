@@ -5,6 +5,15 @@ import pytesseract
 import os
 import glob
 
+# Install:
+# https://github.com/UB-Mannheim/tesseract
+# https://tesseract-ocr.github.io/tessdoc/Installation.html
+# https://tesseract-ocr.github.io/tessdoc/Downloads.html
+# https://sourceforge.net/projects/tesseract-ocr-alt/files/
+# https://sourceforge.net/projects/tesseract-ocr-alt/files/tesseract-ocr-setup-3.02.02.exe/download
+# pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'  # Use your actual installation path
+pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files (x86)\Tesseract-OCR\tesseract.exe'
+
 # Function to perform OCR on an image and save the text
 def ocr_on_image(image_path, output_path):
     try:
@@ -53,9 +62,9 @@ def process_images_in_folder():
             text = ocr_on_image(image_path, output_path)
             total_text.append(text)
 
-    # Save all extracted texts in 'total.txt'
-    with open(total_file_path, 'w') as file:
-        file.writelines(total_text)
+    # When opening the file for writing, specify the encoding as UTF-8
+    with open(output_path, 'w', encoding='utf-8') as file:
+        file.write(text)
 
 # Run the main function
 process_images_in_folder()
