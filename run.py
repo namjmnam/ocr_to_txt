@@ -31,21 +31,27 @@ def process_images_in_folder():
     if not folder_path:
         return
 
+    # Print the selected folder path for verification
+    print("Selected folder:", folder_path)
+
     # Prepare to write all text to a single file
     total_text = []
     total_file_path = os.path.join(folder_path, 'total.txt')
-    print(folder_path)
+
+    # Define a list of image file extensions
+    image_extensions = ['png', 'jpg', 'jpeg', 'bmp', 'gif', 'tiff']
 
     # Iterate over all image files in the folder
-    for image_path in glob.glob(os.path.join(folder_path, '*.[pj][np][ge][g]')):
-        print(image_path)
-        # Construct the output file path
-        base_name = os.path.splitext(os.path.basename(image_path))[0]
-        output_path = os.path.join(folder_path, f"{base_name}_ocr.txt")
-        
-        # Perform OCR and save the text
-        text = ocr_on_image(image_path, output_path)
-        total_text.append(text)
+    for extension in image_extensions:
+        for image_path in glob.glob(os.path.join(folder_path, f'*.{extension}')):
+            print("Processing:", image_path)  # Print the path of each image being processed
+            # Construct the output file path
+            base_name = os.path.splitext(os.path.basename(image_path))[0]
+            output_path = os.path.join(folder_path, f"{base_name}_ocr.txt")
+            
+            # Perform OCR and save the text
+            text = ocr_on_image(image_path, output_path)
+            total_text.append(text)
 
     # Save all extracted texts in 'total.txt'
     with open(total_file_path, 'w') as file:
