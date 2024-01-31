@@ -22,7 +22,7 @@ def ocr_on_image(image_path, output_path):
         # Perform OCR
         text = pytesseract.image_to_string(img)
         # Write the extracted text
-        with open(output_path, 'w') as file:
+        with open(output_path, 'w', encoding='utf-8') as file:
             file.write(text)
         return text
     except Exception as e:
@@ -62,9 +62,9 @@ def process_images_in_folder():
             text = ocr_on_image(image_path, output_path)
             total_text.append(text)
 
-    # When opening the file for writing, specify the encoding as UTF-8
-    with open(output_path, 'w', encoding='utf-8') as file:
-        file.write(text)
+    # Save all extracted texts in 'total.txt'
+    with open(total_file_path, 'w', encoding='utf-8') as file:
+        file.writelines(total_text)
 
 # Run the main function
 process_images_in_folder()
